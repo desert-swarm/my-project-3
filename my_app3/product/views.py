@@ -19,3 +19,22 @@ def product(key):
 
     return render_template('product.html', product=product)
 
+## adding for v2 app4
+@product_blueprint.context_processor
+def some_processor():
+    def full_name(product):
+        return '{0} / {1}'.format(product['category'],
+                                  product['name'])
+    return {'full_name': full_name}
+
+# creating a Jinja filter
+@product_blueprint.app_template_filter('full_name')
+def full_name_filter(product):
+    return '{0} / {1}'.format(product['category'],
+                              product['name']) 
+
+
+# adding a sign-in page to see how it is
+@product_blueprint.route('/sign-in')
+def sign_in():
+    return render_template('sign_in.html')
